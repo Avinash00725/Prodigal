@@ -11,7 +11,6 @@ on:
       - main
     paths:
       - 'TASK1/**'
-  workflow_dispatch:
 
 jobs:
   test:
