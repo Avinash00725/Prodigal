@@ -25,7 +25,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r task1/requirements.txt
+          pip install -r TASK1/requirements.txt
       - name: Run Unit Tests
         run: pytest
         working-directory: TASK1/
