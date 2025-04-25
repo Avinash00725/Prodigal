@@ -6,12 +6,12 @@ on:
     branches:
       - main
     paths:
-      - 'task1/**'
+      - 'TASk1/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'task1/**'
+      - 'TASK!/**'
 
 jobs:
   test:
@@ -29,7 +29,7 @@ jobs:
           pip install -r task1/requirements.txt
       - name: Run Unit Tests
         run: pytest
-        working-directory: task1/
+        working-directory: TASK1/
 
   build-and-push:
     runs-on: ubuntu-latest
@@ -48,8 +48,8 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: task1/
-          file: task1/Dockerfile
+          context: TASK1/
+          file: TASK!/Dockerfile
           push: true
           tags: avinash00725/hello-inference-task1:latest
 ```
