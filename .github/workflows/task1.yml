@@ -1,3 +1,4 @@
+```yaml
 name: Task1 CI/CD Pipeline
 
 on:
@@ -48,6 +49,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: TASK1/
-          file: TASK!/Dockerfile
+          file: TASK1/Dockerfile
           push: true
           tags: avinash00725/hello-inference-task1:latest
+```
