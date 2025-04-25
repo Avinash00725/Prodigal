@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'TASk1/**'
+      - 'TASK1/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'TASK!/**'
+      - 'TASK1/**'
 
 jobs:
   test:
