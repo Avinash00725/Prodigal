@@ -8,9 +8,9 @@ A simple Python application demonstrating a basic machine learning inference tas
 
 - **Python**: 3.8 or higher  
 - **Conda or Virtualenv**: For managing Python environments  
-- **Docker**: For containerized deployment (optional)  
+- **Docker**: For containerized deployment   
 - **Git**: For version control  
-- **NVIDIA GPU and CUDA**: Required for GPU-based inference (optional)
+- **NVIDIA GPU and CUDA**: Required for GPU-based inference 
 
 ---
 
@@ -30,7 +30,7 @@ conda create -n inference_env python=3.8
 conda activate inference_env
 pip install -r requirements.txt
 ```
-- ***Using Virtualenv***:
+- **Using Virtualenv**:
 ```bash
 python -m venv inference_env
 source inference_env/bin/activate  # On Windows: inference_env\Scripts\activate
@@ -40,6 +40,30 @@ pip install -r requirements.txt
 ```bash
 python hello_inference.py
 ```
-- **
+- ***Exprected Output***:
+```bash
+Hello, Inference! Running on <cuda|cpu>. Output: <some_float_value>
+```
+
+### 4.Run Unit Tests
+```bash
+pytest
+```
+
+## Docker Deployment
+
+### Build the Docker image:
+```bash
+docker build -t hello-inference .
+```
+
+### Run the container:
+```bash
+docker run --gpus all hello-inference
+```
+If no GPU is available, the application will fall back to CPU.
+
+
+
 
 
