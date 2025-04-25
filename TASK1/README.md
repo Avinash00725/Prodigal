@@ -63,6 +63,11 @@ docker run --gpus all hello-inference
 ```
 If no GPU is available, the application will fall back to CPU.
 
+## CI/CD
+A GitHub Actions pipeline is configured(see `.github/workflows/docker.yml `) to:
+- Run unit tests on every push or pull request
+- Build and push the Docker image to Docker Hub on pushes to the `main` branch
+
 
 
 
