@@ -1,5 +1,5 @@
 Hello, Inference! Project
-A simple Python application that demonstrates a basic machine learning inference task using PyTorch. The application runs a dummy linear model on random input data, utilizing GPU (CUDA) if available or falling back to CPU. This project serves as a starting point for building more complex inference pipelines.
+A simple Python application demonstrating a basic machine learning inference task using PyTorch. The application runs a dummy linear model on random input data, utilizing a GPU (CUDA) if available or falling back to a CPU. This project serves as a starting point for building more complex inference pipelines.
 Prerequisites
 
 Python: 3.8 or higher
@@ -37,18 +37,21 @@ This runs the unit tests in test_inference.py to verify the run_inference functi
 Docker Deployment
 To run the application in a container (with GPU support if available):
 
-Build the Docker image:docker build -t hello-inference .
+Build the Docker image:
+docker build -t hello-inference .
 
 
-Run the container:docker run --gpus all hello-inference
+Run the container:
+docker run --gpus all hello-inference
 
 If no GPU is available, the application will fall back to CPU.
+
 
 Project Structure
 
 hello_inference.py: Main application script that runs a simple inference task.
 test_inference.py: Unit tests for the inference function.
-requirements.txt: Python dependencies.
+requirements.txt: Python dependencies (PyTorch, NumPy, pytest).
 Dockerfile: Configuration for building a Docker image.
 .gitignore: Excludes unnecessary files from version control.
 
