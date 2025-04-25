@@ -51,4 +51,4 @@ jobs:
           context: TASK1/
           file: TASK1/Dockerfile
           push: true
-          tags: avinash00725/hello-inference-task1:latest
+          tags: avinash0025/hello-inference-task1:latest
