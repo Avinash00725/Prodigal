@@ -1,4 +1,5 @@
 name: Task1 CI/CD Pipeline
+
 on:
   push:
     branches:
@@ -10,6 +11,7 @@ on:
       - main
     paths:
       - 'TASK1/**'
+  workflow_dispatch:
 
 jobs:
   test:
