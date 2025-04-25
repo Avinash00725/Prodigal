@@ -30,7 +30,7 @@ conda create -n inference_env python=3.8
 conda activate inference_env
 pip install -r requirements.txt
 ```
-- ***Using Virtualenv**:
+- ***Using Virtualenv***:
 ```bash
 python -m venv inference_env
 source inference_env/bin/activate  # On Windows: inference_env\Scripts\activate
