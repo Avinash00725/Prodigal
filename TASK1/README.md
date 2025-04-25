@@ -21,6 +21,7 @@ A simple Python application demonstrating a basic machine learning inference tas
 ```bash
 git clone <repository-url>
 cd inference-project
+```
 
 ### 2.Creating a Python Environment
 - **Using Conda**:
@@ -28,4 +29,5 @@ cd inference-project
 conda create -n inference_env python=3.8
 conda activate inference_env
 pip install -r requirements.txt
+```
 
