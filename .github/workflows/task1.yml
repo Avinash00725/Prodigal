@@ -1,5 +1,4 @@
 name: Task1 CI/CD Pipeline
-
 on:
   push:
     branches:
