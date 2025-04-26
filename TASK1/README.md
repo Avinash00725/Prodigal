@@ -40,7 +40,7 @@ pip install -r requirements.txt
 ```bash
 python hello_inference.py
 ```
-- ***Exprected Output***:
+- ***Expected Output***:
 ```bash
 Hello, Inference! Running on <cuda|cpu>. Output: <some_float_value>
 ```
