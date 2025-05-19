@@ -1,5 +1,5 @@
 # Prodigal AI Batch 5  
-## Week 2: 2 May–16 May ’25  
+## TASK 2: 2 May–16 May ’25  
 ### Team Lead: Ishan Mittal  
 ### Team Members: Avinash Reddy, Divya Rao, Prem Bagga  
 
