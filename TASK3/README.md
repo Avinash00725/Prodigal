@@ -1,114 +1,108 @@
-# README: Semantic Segmentation with Segment Anything Model (SAM)
+# Segment Anything (SAM) for Image and Video Segmentation
 
-## Overview
-This repository demonstrates the use of Facebook Research's "Segment Anything Model" (SAM) for semantic segmentation. The project includes loading a pre-trained ViT-H model, uploading an image, and generating automatic segmentation masks.
+This project demonstrates how to use the **Segment Anything Model (SAM)** for both **static image segmentation** and **video frame-by-frame segmentation** using Python, OpenCV, and the SAM library.
+
+## Project Structure
+
+```
+project-root/
+├── sam2.ipynb           ← Jupyter notebook with SAM code for image and video segmentation
+└── content/
+    ├── image.jpg        ← Input image for static segmentation
+    └── video.mp4        ← Input video for frame-by-frame segmentation
+```
 
 ## Prerequisites
-Before you begin, ensure you have the following installed:
 
-1. Python 3.6 or later
-2. Required libraries: OpenCV, Matplotlib, NumPy, Torch
+- Install required packages:
+  ```bash
+  pip install opencv-python matplotlib numpy segment-anything
+  ```
+- Download the SAM model checkpoint and place it in the project root or specify its path in the notebook.
 
-You will also need:
-- Access to Google Colab (optional for easier execution).
-- An internet connection to download the pre-trained model and required dependencies.
+## Static Image Segmentation
 
-## Steps to Run the Code
-
-### Step 1: Install Dependencies
-Install the required Python packages and clone the SAM repository:
-
-```bash
-!pip install opencv-python matplotlib
-!git clone https://github.com/facebookresearch/segment-anything.git
-%cd segment-anything
-```
-
-### Step 2: Download the Pre-Trained Model Checkpoint
-Download the SAM ViT-H model checkpoint and place it in the appropriate directory:
-
-```bash
-!mkdir -p models
-!wget -O models/sam_vit_h.pth https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
-```
-
-### Step 3: Upload an Image
-Upload an image file for segmentation:
-
-```python
-from google.colab import files
-uploaded = files.upload()
-```
-
-### Step 4: Load the Model
-Load the pre-trained SAM model using Torch:
-
-```python
-import torch
-from segment_anything import sam_model_registry, SamPredictor
-
-sam = sam_model_registry["vit_h"](checkpoint="models/sam_vit_h.pth")
-predictor = SamPredictor(sam)
-```
-
-### Step 5: Read the Uploaded Image
-Load and preprocess the uploaded image:
+The following code loads and segments a single image (`content/image.jpg`) using SAM:
 
 ```python
 import cv2
-import numpy as np
-
-image_path = list(uploaded.keys())[0]
-image = cv2.imread(image_path)
-image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-```
-
-### Step 6: Predict Masks Using Automatic Mask Generator
-Generate segmentation masks with the automatic mask generator:
-
-```python
+import matplotlib.pyplot as plt
 from segment_anything import SamAutomaticMaskGenerator
 
+# Load image
+image = cv2.imread("../content/image.jpg")
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# Initialize SAM mask generator
 mask_generator = SamAutomaticMaskGenerator(sam)
-masks = mask_generator.generate(image)
-```
 
-### Step 7: Visualize the Segmentation Output
-Display the segmented output overlaid on the original image:
+# Generate masks
+masks = mask_generator.generate(image_rgb)
 
-```python
-import matplotlib.pyplot as plt
-
-def show_anns(anns):
-    if len(anns) == 0:
-        return
-    sorted_anns = sorted(anns, key=(lambda x: x['area']), reverse=True)
-    img = np.ones((anns[0]['segmentation'].shape[0], anns[0]['segmentation'].shape[1], 4))
-    for ann in sorted_anns:
-        m = ann['segmentation']
-        color_mask = np.random.random(3).tolist() + [0.6]
-        img[m] = color_mask
-    plt.imshow(img)
-
-plt.figure(figsize=(10, 10))
-plt.imshow(image)
-show_anns(masks)
+# Visualize
+plt.imshow(image_rgb)
+show_anns(masks)  # Custom function to display segmented masks
 plt.axis('off')
-plt.title("Segmented Output with SAM")
 plt.show()
 ```
 
-## Expected Output
-Once executed, the code will:
-1. Load the pre-trained SAM model.
-2. Accept an uploaded image.
-3. Generate segmentation masks using the Automatic Mask Generator.
-4. Display the segmented output with overlaid masks.
+## Video Segmentation (Frame-by-Frame)
 
-## Troubleshooting
-- Ensure that all dependencies are installed.
-- Verify the model file path.
-- If issues persist, confirm that the uploaded image format is supported by OpenCV.
+To perform **video segmentation** on `content/video.mp4`, the following code reads the video, processes each frame with SAM, and visualizes the results:
 
-## License
-This repository follows the licensing of the original "Segment Anything" project by Facebook Research. Please refer to their repository for licensing terms.
+```python
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+from segment_anything import SamAutomaticMaskGenerator
+
+# Load video
+video_path = "../content/video.mp4"
+cap = cv2.VideoCapture(video_path)
+
+# Initialize SAM mask generator
+mask_generator = SamAutomaticMaskGenerator(sam)
+
+frame_count = 0
+max_frames = 5  # Process only first 5 frames for preview
+
+while cap.isOpened() and frame_count < max_frames:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    # Convert BGR to RGB
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    # Generate masks
+    masks = mask_generator.generate(frame_rgb)
+
+    # Visualize the segmentation
+    def show_anns(anns):
+        if len(anns) == 0:
+            return
+        sorted_anns = sorted(anns, key=(lambda x: x['area']), reverse=True)
+        img = np.ones((anns[0]['segmentation'].shape[0], anns[0]['segmentation'].shape[1], 4))
+        for ann in sorted_anns:
+            m = ann['segmentation']
+            color_mask = np.random.random(3).tolist() + [0.6]
+            img[m] = color_mask
+        plt.imshow(img)
+
+    plt.figure(figsize=(8, 8))
+    plt.imshow(frame_rgb)
+    show_anns(masks)
+    plt.axis('off')
+    plt.title(f"Segmented Frame {frame_count}")
+    plt.show()
+
+    frame_count += 1
+
+cap.release()
+```
+
+## Notes
+
+- Ensure `content/image.jpg` and `content/video.mp4` exist in the `content/` directory.
+- Adjust `max_frames` to process more or fewer frames as needed.
+- The `show_anns` function overlays segmented masks with random colors for visualization.
