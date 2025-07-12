@@ -5,7 +5,7 @@ This project demonstrates how to use the **Segment Anything Model (SAM)** for bo
 ## Project Structure
 
 ```
-project-root/
+sam2/
 ├── sam2.ipynb           ← Jupyter notebook with SAM code for image and video segmentation
 └── content/
     ├── image.jpg        ← Input image for static segmentation
